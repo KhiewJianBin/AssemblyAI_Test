@@ -1,11 +1,12 @@
 # AssemblyAI_Test
-  Web API test usage in Unity
+  Test usage of AssemblyAI Web API in Unity
 
 # Install
 No Installation Required. Just Git clone or direct download
 
 ## Usage
-Open in Unity Editor
+1. Open in Unity Editor
+2. Run Test Scene [AssemblyAI_Test.unity](https://github.com/KhiewJianBin/AssemblyAI_Test/blob/main/Assets/Scenes/AssemblyAI_Test.unity)
 
 ## Notes
 - Hardcoded API Key
