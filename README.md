@@ -17,4 +17,4 @@ No Installation Required. Just Git clone or direct download
 ## Sources
 - AssemblyAI [^1]
 
-[^1]: https://app.assemblyai.com/
+[^1]: https://www.assemblyai.com/app
