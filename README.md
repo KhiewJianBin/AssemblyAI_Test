@@ -1,5 +1,5 @@
 # AssemblyAI_Test
-  Test usage of AssemblyAI Web API in Unity
+  Simple project test usage of AssemblyAI Web API in Unity
 
 # Install
 No Installation Required. Just Git clone or direct download
@@ -17,4 +17,4 @@ No Installation Required. Just Git clone or direct download
 ## Sources
 - AssemblyAI [^1]
 
-[^1]: https://app.assemblyai.com/
+[^1]: https://www.assemblyai.com/app
