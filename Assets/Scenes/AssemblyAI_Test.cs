@@ -1,33 +1,38 @@
 using System;
-using System.Net.Http;
 using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.UI;
+
 using Newtonsoft.Json;
 using System.IO;
 
 public class AssemblyAI_Test : MonoBehaviour
 {
-    public InputField statusMessageField;
-    public Button RecordBtn;
-    public Button PlayRecordBtn;
-    public Button UploadAudioBtn;
-    public Button TranslateAudioBtn;
+    public string APITOKEN = "785d5d7a1ca34f95a3a2d8ed2721de61";
+    public int MaxAudioClipDuration = 10;
+
+    [SerializeField] InputField statusMessageField;
+    [SerializeField] Button record_Btn;
+    [SerializeField] Button play_Btn;
+    [SerializeField] Button uploadAudio_Btn;
+    [SerializeField] Button translateAudio_Btn;
+
+    public AudioSource audioSource;
+    string recordingMic;
 
     void Awake()
     {
-        RecordBtn.onClick.AddListener(OnRecordBtnClick);
-        PlayRecordBtn.onClick.AddListener(OnPlayRecordBtnClick);
-        UploadAudioBtn.onClick.AddListener(OnUploadAudioBtnClick);
-        TranslateAudioBtn.onClick.AddListener(OnTranslateAudioBtnClick);
+        record_Btn.onClick.AddListener(OnRecordBtnClick);
+        play_Btn.onClick.AddListener(OnPlayRecordBtnClick);
+        uploadAudio_Btn.onClick.AddListener(OnUploadAudioBtnClick);
+        translateAudio_Btn.onClick.AddListener(OnTranslateAudioBtnClick);
 
         statusMessageField.text = "1.Click Record\n2.Upload\n3.Wait\n4.Translate Audio";
     }
 
-    const int MaxAudioClipDuration = 10;
-    public AudioSource audioSource;
-    string recordingMic;
     void OnRecordBtnClick()
     {
         string[] microphoneDevices = Microphone.devices;
@@ -43,7 +48,7 @@ public class AssemblyAI_Test : MonoBehaviour
                 audioSource.clip = Microphone.Start(recordingMic, false, MaxAudioClipDuration, minFreq == 0 && maxFreq == 0 ? 44100 : maxFreq);
 
                 //Update UI
-                RecordBtn.GetComponentInChildren<Text>().text = "Stop Record";
+                record_Btn.GetComponentInChildren<Text>().text = "Stop Record";
                 statusMessageField.text = "Recording!";
             }
             else
@@ -54,7 +59,7 @@ public class AssemblyAI_Test : MonoBehaviour
                 recordingMic = "";
 
                 //Update UI
-                RecordBtn.GetComponentInChildren<Text>().text = "Start Record";
+                record_Btn.GetComponentInChildren<Text>().text = "Start Record";
                 statusMessageField.text = "Audio Recorded!";
             }
         }
@@ -70,7 +75,6 @@ public class AssemblyAI_Test : MonoBehaviour
         }
     }
 
-    const string APITOKEN = "785d5d7a1ca34f95a3a2d8ed2721de61";
     void OnUploadAudioBtnClick()
     {
         if (recordingMic != string.Empty && Microphone.IsRecording(recordingMic)) return;
@@ -79,7 +83,6 @@ public class AssemblyAI_Test : MonoBehaviour
         //Save first
         SavWav.Save("test.wav", audioSource.clip);
         
-
         //Update UI
         statusMessageField.text = "Uploading - Do not Spam uploads";
 
@@ -90,7 +93,6 @@ public class AssemblyAI_Test : MonoBehaviour
         HttpClient client = new HttpClient();
         client.BaseAddress = new Uri("https://api.assemblyai.com/v2/");
         client.DefaultRequestHeaders.Add("authorization", APITOKEN);
-
 
         var filepath = Path.Combine(Application.persistentDataPath, "test.wav");
 
